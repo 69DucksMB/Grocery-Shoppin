@@ -1,0 +1,167 @@
+# ============================ #
+# Lists Practice - Grocery Lists
+# Mark Balagtas
+# 5/26/2021
+# A Grocery List using list methods with a bit of plot
+# I restarted because I got bored of the other one.
+# I was going to add a robbery scene and gun smuggler scene but I got bored, so I ended it with Obama
+# ============================ #
+# Show weapons, engraved list of groups of weapons/types. You pick one. Some dude asks if you want weapons.
+
+import time
+
+# ====== ^imports^ ====== #
+
+req = ['Milk', 'Cheese', 'Eggs', 'Dori-Toes', 'Fart in a Jar!', 'Smelly Jelly! (FAMILY SIZE!)', '1 Shoe by Hasbros', '50lbs of Gold Bricks']
+reqc = [3.44, 4.32, 4.19, 3.57, 6.99, 8.99, 69.99, 1665363.03]
+
+
+# ====== ^lists^ ====== #
+
+t = time
+play = True
+ogcost = sum(reqc) #the cost of og list
+d = 1 # common delay between lines
+
+# ====== ^ints^ ====== #
+
+def printlist(list1, list2):# a func that prints items on a list individually plus their price
+    list_num = 0
+    t.sleep(d)
+    while list_num < len(list1):
+        print(list1[list_num], '$', list2[list_num]) # the variable list_num is a way to end loop, but also as the item position on the list
+        list_num += 1 #adds to the var until while condition is met. repeats until list_num reaches the length of the list
+        t.sleep(.5)
+        
+def start(): #starting scene
+    t.sleep(d)
+    print("\nYou're driving around the city flexing your brand new Tesla.")
+    t.sleep(d)
+    print("All of a sudden your phone rings, it's your wife.")
+    t.sleep(d)
+    print("She tells you to buy her some things for dinner today.")
+    t.sleep(d)
+    print("\nYou agree and write down a list.")
+    t.sleep(d)
+    print("\nYour list: ")
+    printlist(req,reqc)
+    
+def walmart(): # walmart scene
+    t.sleep(d)
+    print('\nYou are confused why she needs gold for dinner, but you agree anyways and write it down on your list.')
+    t.sleep(d)
+    print("To buy the items on your list, you decide to go to Walmart.")
+    t.sleep(d)
+    print("In Walmart, you grab the items from the list and you put them in your cart.")
+    t.sleep(d)
+    print("\nYour total cost so far is: ", '$', ogcost)
+    t.sleep(d)
+    
+def shopping(): #  Shopping Scene  #
+    t.sleep(d)
+    print("Before you head to cashout, you wonder if you should buy more things.")
+    start = True
+    olist = [] # own list resets every play thru
+    olistc = []
+    while start == True:
+        total_cost = float(sum(reqc)) + float(sum(olistc))
+        print('\n(1) Add items \n(2) Remove Items \n(3) Show List \n(4) Calculate cost \n(9) Leave')
+        print('Please enter a number (1, 2, 3, 4, or 9)')
+        do = input("What do you want to do? ")
+        
+        if '1' in do: # add
+            item = input('What item would you like to add? ')
+            itemc = float(input("What is it's price? "))
+            olist.append(item)#adds item
+            olistc.append(float(itemc)) #adds price as float so sumable
+            print('Item added')
+            
+        elif '2' in do: # remove
+            if len(olist) == 0:
+                t.sleep(d)
+                print('You have nothing added in your list. \nYou need these items!')
+                t.sleep(d)
+            else:
+                print('\nAdded list: ')
+                printlist(olist,olistc)
+                ritem = input('What item would you like to remove? ')
+                if ritem in olist:
+                    ind = olist.index(ritem) #returns index of item to remove so u can remove the price.
+                    olist.remove(ritem)
+                    olistc.remove(olistc[ind])
+                    
+                    print(ritem, 'has been removed.')
+                    
+                else:
+                    print("You did not add that to the list.")
+                    time.sleep(d)
+                    
+        elif '3' in do: # Show
+            print("\nYour list: ")
+            printlist(req, reqc)
+            if len(olist) == 0:
+                t.sleep(d)
+                print("You have not added any items.")
+                t.sleep(d)
+            else:
+                print("\nPlus: ")
+                printlist(olist,olistc)
+            
+        elif '4' in do: # Cost
+            if len(olist) == 0: # checks if ya have item on olist if not prints cost of req list
+                t.sleep(d)
+                print("Your total cost so far is: $", ogcost)
+                t.sleep(d)
+            else: # else it prints cost of both lists combined
+                t.sleep(d)
+                print("Your total cost so far is: $$", total_cost)
+                t.sleep(d)
+            
+        elif '9' in do: # LEAVE
+            if len(olist) == 0:
+                t.sleep(d)
+                print('You leave Walmart, paying a total cost of: $', ogcost)
+                break
+                t.sleep(d)
+            else:
+                t.sleep(d)
+                print('\nYou leave Walmart, paying for a total cost of $', total_cost)
+                t.sleep(d)
+                break
+            
+        else:
+            print("I don't understand")
+            
+def end(): #end scene
+    t.sleep(d)
+    print('\nYou come home to bring back the groceries for your wife.')
+    t.sleep(2)
+    print("All of a sudden you find a mens coat hanging on the coat rack that isn't yours")
+    t.sleep(2)
+    print("You look for your wife, and find her in your bed with another Barack Obama.")
+    t.sleep(2)
+    print("\nGAME OVER!")
+    t.sleep(d)
+    print('Your wife slept with Obama!')
+    
+
+def main():
+    while play == True: #scenes
+        start()
+        walmart()
+        shopping()
+        end()
+        
+        # Play again function 
+        again = input('Would you like to play again? Y/N? ')
+        if 'y' in again.lower() or 'sure' in again.lower():
+            continue
+        else:
+            print('Buh Bye!')
+            break
+# ====== ^funcs^ ===== #
+
+main ()
+
+# == ^main^ == #
+
